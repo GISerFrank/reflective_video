@@ -1,7 +1,9 @@
 // src/services/api.ts
 // API 服务层 - 与后端 FastAPI 通信
 
-import {
+// src/services/api.ts
+// API 服务层 - 与后端 FastAPI 通信
+import type {
     Video,
     VideoWithProgress,
     Reflection,
@@ -16,7 +18,7 @@ import {
 } from '../types';
 
 // API 基础配置
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 class ApiClient {
     private baseURL: string;

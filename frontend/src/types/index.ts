@@ -68,7 +68,8 @@ export interface Comment {
     created_at: string;
 }
 
-export enum CommentStatus {
+// @ts-ignore
+export const enum CommentStatus {
     PENDING = 'pending',
     APPROVED = 'approved',
     REJECTED = 'rejected'
@@ -112,6 +113,14 @@ export interface SimilarityCheckResponse {
     recommendation: string;
 }
 
+// API 响应类型 - 重要：这个必须在这里定义
+export interface ApiResponse<T> {
+    success: boolean;
+    data?: T;
+    error?: string;
+    message?: string;
+}
+
 // 组件状态类型
 export interface VideoWithProgress {
     video: Video;
@@ -125,13 +134,6 @@ export interface VideoWithProgress {
     };
     next_video?: Video;
     prev_video?: Video;
-}
-
-export interface ApiResponse<T> {
-    success: boolean;
-    data?: T;
-    error?: string;
-    message?: string;
 }
 
 // 全局状态类型

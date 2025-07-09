@@ -3,7 +3,7 @@
 
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import {
+import type {
     User,
     Video,
     VideoWithProgress,
@@ -112,12 +112,12 @@ export const useVideoStore = create<VideoState>()(
                 if (response.success) {
                     // 更新当前视频的进度
                     const { currentVideo } = get();
-                    if (currentVideo && currentVideo.video.id === videoId) {
+                    if (currentVideo && currentVideo.video.id === videoId && currentVideo.progress) {
                         set({
                             currentVideo: {
                                 ...currentVideo,
                                 progress: {
-                                    ...currentVideo.progress!,
+                                    ...currentVideo.progress, // <-- 安全地扩展
                                     completion_percentage: progress,
                                     is_completed: progress >= 100,
                                 }
@@ -163,7 +163,7 @@ export const useReflectionStore = create<ReflectionState>()(
                 if (response.success && response.data) {
                     set({ reflections: response.data }, false, 'fetchReflections:success');
                 } else {
-                    set({ error: response.error || '获取观后感失败' }, false, 'fetchReflections:error');
+                    set({ error: response.error || '获取观后感失败' , reflections: []}, false, 'fetchReflections:error');
                 }
             } catch (error) {
                 set({ error: '网络错误' }, false, 'fetchReflections:catch');
